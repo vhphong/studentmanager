@@ -20,10 +20,10 @@
       $stdAvatar = $_POST['avatar'];
       $stdSubmissions = $_POST['stdsubmission'];
 
-      $query = "INSERT INTO studentinfo(sid, firstname, lastname, ssn, dob, gender, race, photo, submission)
+      $queryInsert = "INSERT INTO studentinfo(sid, firstname, lastname, ssn, dob, gender, race, photo, submission)
                 VALUES ('', '$stdFName', '$stdLName', '$stdSSN', '$stdDOB', '$stdGender', '$stdRace', '$stdAvatar', '$stdSubmissions')";
 
-      $result = mysqli_query($dbconnection, $query);
+      $result = mysqli_query($dbconnection, $queryInsert);
 
       if ($result) {
         header("location:view.php");
