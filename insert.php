@@ -1,13 +1,13 @@
 <?php
-  require_once("connection.php");
+  $dbconnection = mysqli_connect("localhost", "root", "", "dbstudentmanager");
 
   // if Insert button was pressed
   if (isset($_POST['insert']))
   {
     // check for null values
     if (empty($_POST['fname']) || empty($_POST['lname']) || empty($_POST['birthday']) || empty($_POST['stdgender']) || empty($_POST['stdrace'])) {
-      die("Please fill in all blanks");
-      // header("location:index.php");
+      // die("Please fill in First Name, Last Name, DOB, Gender and Race");
+      header("location:index.php");
     }
     else {
       $stdID = $_POST['stdid'];
@@ -26,7 +26,6 @@
       $result = mysqli_query($dbconnection, $query);
 
       if ($result) {
-        echo "Insertion succeed";
         header("location:view.php");
       }
       else {
@@ -36,6 +35,6 @@
   }
   else {
     // header("location:index.php");
-    die("insert.php is not connected");
+    die("Please fill in all blanks");
   }
 ?>

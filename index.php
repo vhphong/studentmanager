@@ -13,6 +13,7 @@
           <td>SID</td>
           <!-- <td><input type="text" name="stdid" readonly="readonly"</td> -->
           <td><input type="text" name="stdid" disabled="disabled"</td>
+          <!-- <td><input type="text" name="stdid"</td> -->
         </tr>
         <tr>
           <td>First Name</td>
@@ -34,7 +35,7 @@
           <td>Gender</td>
           <td><input type="radio" name="stdgender" value="m">Male
               <input type="radio" name="stdgender" value="f">Female
-              <input type="radio" name="stdgender" value="other">Other</td>
+              <input type="radio" name="stdgender" value="o">Other</td>
         </tr>
         <tr>
           <td>Race</td>
