@@ -25,7 +25,7 @@
         </tr>
         <tr>
           <td>SSN (Optional)</td>
-          <td><input type="text" name="ss" placeholder="___-__-____" pattern="\d{3}-?\d{2}-?\d{4}"></td>
+          <td><input type="text" name="ss" placeholder="xxx-xx-xxxx" pattern="\d{3}-?\d{2}-?\d{4}"></td>
         </tr>
         <tr>
           <td>Date of birth</td>
@@ -63,7 +63,7 @@
         <tr>
           <!-- <button type="" name="insert">Submit</button> -->
           <td><input type="submit" name="insert" value="INSERT"></td>
-          <td><input type="submit" name="display" value="Show Database"></td>
+          <td><input type="submit" name="display" value="VIEW RECORDS"></td>
         </tr>
       </table>
     </form>

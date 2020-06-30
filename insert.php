@@ -33,6 +33,10 @@
       }
     }
   }
+  elseif (isset($_POST['display']))
+  {
+    header("location:view.php");
+  }
   else {
     // header("location:index.php");
     die("Please fill in all blanks");

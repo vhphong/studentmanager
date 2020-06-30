@@ -1,4 +1,3 @@
-
 <?php
   require_once("connection.php");
   $queryView = "SELECT sid, firstname, lastname, dob, gender, race, photo
@@ -15,6 +14,7 @@
   </head>
   <body>
     <h3>Student Manager Records</h3>
+    <a href="index.php">Back to Entry Form</a>
     <table>
       <tr>
         <td>Student ID</td>
