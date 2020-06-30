@@ -34,19 +34,19 @@
           $stdGender = $row['gender'];
           $stdRace = $row['race'];
           $stdAvatar = $row['photo'];
-          ?>
-          <tr>
-            <td><?php echo $stdID ?></td>
-            <td><?php echo $stdFName ?></td>
-            <td><?php echo $stdLName ?></td>
-            <td><?php echo $stdDOB ?></td>
-            <td><?php echo $stdGender ?></td>
-            <td><?php echo $stdRace ?></td>
-            <td><?php echo $stdAvatar ?></td>
-          </tr>
-          <?php
-          }
-          ?>
+      ?>
+        <tr>
+          <td><?php echo $stdID ?></td>
+          <td><?php echo $stdFName ?></td>
+          <td><?php echo $stdLName ?></td>
+          <td><?php echo $stdDOB ?></td>
+          <td><?php echo $stdGender ?></td>
+          <td><?php echo $stdRace ?></td>
+          <td><?php echo $stdAvatar ?></td>
+        </tr>
+        <?php
+      } // end of while
+        ?>
     </table>
   </body>
 </html>
