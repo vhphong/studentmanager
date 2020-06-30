@@ -43,6 +43,8 @@
           <td><?php echo $stdGender ?></td>
           <td><?php echo $stdRace ?></td>
           <td><?php echo $stdAvatar ?></td>
+          <td><a href="edit.php">Edit</a></td>
+          <td><a href="delete.php">Delete</a></td>
         </tr>
         <?php
       } // end of while
