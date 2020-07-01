@@ -53,7 +53,7 @@
           </td>
         </tr>
         <tr>
-          <td>Photo</td>
+          <td>Avatar</td>
           <td><input type="file" name="avatar"</td>
         </tr>
         <tr>

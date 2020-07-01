@@ -44,8 +44,8 @@
           <td><?php echo $stdGender ?></td>
           <td><?php echo $stdRace ?></td>
           <td><?php echo $stdAvatar ?></td>
-          <td><a href="edit.php">Edit</a></td>
-          <td><a href="delete.php">Delete</a></td>
+          <td><a href="edit.php?editID=<?php echo $stdID ?>">Edit</a></td>
+          <td><a href="delete.php?deleteID=<?php echo $stdID ?>">Delete</a></td>
         </tr>
         <?php
       } // end of while
