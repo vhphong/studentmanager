@@ -14,7 +14,8 @@
   </head>
   <body>
     <h3>Student Manager Records</h3>
-    <a href="index.php">Back to Entry Form</a>
+    <a href="index.php">Back to Data Entry Form</a>
+    <br></br>
     <table>
       <tr>
         <td>Student ID</td>

@@ -12,16 +12,16 @@
         <tr>
           <td>SID</td>
           <!-- <td><input type="text" name="stdid" readonly="readonly"</td> -->
-          <td><input type="text" name="stdid" disabled="disabled"</td>
+          <td><input type="text" name="stdid" disabled="disabled"></td>
           <!-- <td><input type="text" name="stdid"</td> -->
         </tr>
         <tr>
           <td>First Name</td>
-          <td><input type="text" name="fname"</td>
+          <td><input type="text" name="fname"></td>
         </tr>
         <tr>
           <td>Last Name</td>
-          <td><input type="text" name="lname"</td>
+          <td><input type="text" name="lname"></td>
         </tr>
         <tr>
           <td>SSN (Optional)</td>
@@ -29,7 +29,7 @@
         </tr>
         <tr>
           <td>Date of birth</td>
-          <td><input type="date" name="birthday"</td>
+          <td><input type="date" name="birthday"></td>
         </tr>
         <tr>
           <td>Gender</td>
@@ -42,23 +42,22 @@
           <!-- <td><input type="text" name="race"</td> -->
           <td>
             <select class="" name="stdrace">
-              <option value=""></option>
+              <option value="native">Decline to self-indentify</option>
               <option value="hispanic">Hispanic or Latino</option>
-              <option value="asian">Asian (not Hispanic or Latino)</option>
-              <option value="native">American Indian or Alaska Native</option>
-              <option value="african">Black or African American</option>
-              <option value="white">White</option>
+              <option value="asian">Asian (Not Hispanic or Latino)</option>
+              <option value="african">Black or African American (Not Hispanic or Latino)</option>
+              <option value="white">White (Not Hispanic or Latino)</option>
               <option value="other">Other</option>
             </select>
           </td>
         </tr>
         <tr>
           <td>Avatar</td>
-          <td><input type="file" name="avatar"</td>
+          <td><input type="file" name="avatar"></td>
         </tr>
         <tr>
           <td>Submissions</td>
-          <td><input type="file" name="stdsubmission"</td>
+          <td><input type="file" name="stdsubmission"></td>
         </tr>
         <tr>
           <!-- <button type="" name="insert">Submit</button> -->
