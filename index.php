@@ -5,8 +5,11 @@
     <title>Student Manager</title>
   </head>
   <body>
-    <h2>Student Manager</h2>
-    <h3>Student 's Information Entry Form</h3>
+    <center>
+      <h2>Student Manager</h2>
+      <h3>Student 's Information Entry Form</h3>
+    </center>
+    <hr width = 100%>
     <form action="insert.php" method="post">
       <table>
         <tr>
@@ -33,21 +36,25 @@
         </tr>
         <tr>
           <td>Gender</td>
-          <td><input type="radio" name="stdgender" value="m">Male
-              <input type="radio" name="stdgender" value="f">Female
-              <input type="radio" name="stdgender" value="o">Other</td>
+          <td>
+            <input type="radio" name="stdgender" value="Male">Male
+            <input type="radio" name="stdgender" value="Female">Female
+            <input type="radio" name="stdgender" value="Other">Other
+          </td>
         </tr>
         <tr>
           <td>Race</td>
           <!-- <td><input type="text" name="race"</td> -->
           <td>
             <select class="" name="stdrace">
-              <option value="native">Decline to self-indentify</option>
-              <option value="hispanic">Hispanic or Latino</option>
-              <option value="asian">Asian (Not Hispanic or Latino)</option>
-              <option value="african">Black or African American (Not Hispanic or Latino)</option>
-              <option value="white">White (Not Hispanic or Latino)</option>
-              <option value="other">Other</option>
+              <option value="">Choose the best described ...</option>
+              <option value="Alaskan or Native American">Alaskan or Native American</option>
+              <option value="Hispanic or Latino">Hispanic or Latino</option>
+              <option value="Asian (Not Hispanic or Latino)">Asian (Not Hispanic or Latino)</option>
+              <option value="Black or African American (Not Hispanic or Latino)">Black or African American (Not Hispanic or Latino)</option>
+              <option value="White (Not Hispanic or Latino)">White (Not Hispanic or Latino)</option>
+              <option value="Decline to self-indentify">Decline to self-indentify</option>
+              <option value="Other">Other</option>
             </select>
           </td>
         </tr>
