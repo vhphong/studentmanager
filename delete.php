@@ -13,7 +13,8 @@
     {
       header("location:view.php");
     }
-    else {
+    else
+    {
       echo "Delete failed. Please check the queryDelete";
     }
   }

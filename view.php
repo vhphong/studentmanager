@@ -19,7 +19,7 @@
     </center>
     <hr width=100%>
     <a href="index.php">Back to Data Entry Form</a>
-    <br><br>0
+    <br><br>
     <table>
       <tr>
         <td>Student ID</td>
