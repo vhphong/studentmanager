@@ -2,7 +2,7 @@
   // echo "delete.php is here";
   require_once("connection.php");
 
-  // if the Delete button was zip_entry_compressed
+  // if the Delete button was pressed
   if (isset($_GET['deleteID']))
   {
     $studentID = $_GET['deleteID'];
@@ -22,5 +22,4 @@
   {
     header("location:view.php");
   }
-
 ?>
