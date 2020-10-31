@@ -3,7 +3,7 @@
   $queryView = "SELECT sid, firstname, lastname, ssn, dob, gender, race, photo, submission
                 FROM studentinfo";
   $resultView = mysqli_query($dbconnection, $queryView);
-  echo "view.php is here.";
+  // echo "view.php is here.";
 ?>
 
 <!DOCTYPE html>
