@@ -94,7 +94,6 @@
             <!-- <td><a href="delete.php?deleteID=<?php echo $stdID ?>">Delete</a></td> -->
             <!-- use double quotes for js inside php! -->
             <td><a onClick="javascript: return confirm('Please confirm deletion')" href="delete.php?deleteID=<?php echo $stdID ?>">Delete</a></td>
-
             <td><a href="submitmore.php?submitID=<?php echo $stdID ?>">Submit more</a></td>
             <td><a href="openfolder.php?openFolderID=<?php echo $stdLName . '_' . $stdFName ?>">View in folder</a></td>
             <!-- open a new browser tab to view the student profile -->
