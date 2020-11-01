@@ -78,13 +78,13 @@
             <td><?php echo $stdAvatar ?></td>
             <td><?php
                    // Open 'avatar' directory, and read its contents
-                   $dir = "C:\\xampp\\htdocs\\PHP_Practice\\studentmanager\\" . $stdLName . '_' . $stdFName;
+                   $dir = "C:/xampp/htdocs/PHP_Practice/studentmanager/" . $stdLName . '_' . $stdFName;
                    if (is_dir($dir)){
                      if ($dh = opendir($dir)){
                        while (($file = readdir($dh)) !== false){
                          if ($file != "." && $file != ".."){
                            // add link to each file
-                           echo "<a href=$dir/$file>$file</a><br>";
+                           echo "<a href=$file>$file</a><br>";
                            // echo $file . "<br>";
                          }
                        }
