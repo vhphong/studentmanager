@@ -78,20 +78,33 @@
             <td><?php echo $stdAvatar ?></td>
             <td><?php
                    // Open 'avatar' directory, and read its contents
-                   $dir = "C:/xampp/htdocs/PHP_Practice/studentmanager/" . $stdLName . '_' . $stdFName;
-                   if (is_dir($dir)){
-                     if ($dh = opendir($dir)){
-                       while (($file = readdir($dh)) !== false){
-                         if ($file != "." && $file != ".."){
-                           // add link to each file
-                           echo "<a href=$file>$file</a><br>";
-                           // echo $file . "<br>";
-                         }
+                   $path = "C:/xampp/htdocs/PHP_Practice/studentmanager/" . $stdLName . '_' . $stdFName;
+                   $dir = scandir($path);
+
+                   foreach($dir as $token){
+                     if(($token != ".") && ($token != "..")){
+                       if(is_dir($path.'/'.$token)){
+                         $folders[] = $token;
                        }
-                       // close the directory
-                       closedir($dh);
+                       else{
+                         $files[] = $token;
+                       }
                      }
                    }
+
+                   foreach($folders as $folder){
+                     $newpath = $path.'/'.$folder;
+                     echo "<a href = fileHandler.php?cale=$newpath> [ $folder ] </a>" . "<br>";
+                   }
+
+                   foreach($files as $file){
+                     $newpath = $path.'/'.$file;
+                     echo "<a href = fileHandler.php?file=$file> $file </a>" . "<br>";
+                   }
+
+
+
+
                 ?>
             </td>
             <td><a href="edit.php?editID=<?php echo $stdID ?>">Edit</a></td>
