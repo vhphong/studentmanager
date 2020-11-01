@@ -83,7 +83,9 @@
                      if ($dh = opendir($dir)){
                        while (($file = readdir($dh)) !== false){
                          if ($file != "." && $file != ".."){
-                           echo $file . "<br>";
+                           // add link to each file
+                           echo "<a href=$dir/$file>$file</a><br>";
+                           // echo $file . "<br>";
                          }
                        }
                        // close the directory
