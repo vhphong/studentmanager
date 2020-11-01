@@ -5,6 +5,7 @@ PS C:\xampp\htdocs\PHP_Practice\studentmanager> git add .
 PS C:\xampp\htdocs\PHP_Practice\studentmanager> git commit -m "comments of changes"
 PS C:\xampp\htdocs\PHP_Practice\studentmanager> git remote add origin https://github.com/vhphong/studentmanager.git
 PS C:\xampp\htdocs\PHP_Practice\studentmanager> git push -u origin master
+											or 	git push -f origin master
 
 
 CREATE DATABASE dbstudentmanager;
