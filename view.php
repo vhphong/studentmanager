@@ -82,7 +82,9 @@
                    if (is_dir($dir)){
                      if ($dh = opendir($dir)){
                        while (($file = readdir($dh)) !== false){
-                         echo $file . "<br>";
+                         if ($file != "." && $file != ".."){
+                           echo $file . "<br>";
+                         }
                        }
                        // close the directory
                        closedir($dh);
