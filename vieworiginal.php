@@ -38,7 +38,6 @@
     <hr width=100%>
     <a href="index.php">Back to Main Data Entry Form index.php</a>
     <br>
-    <a href="indexoriginal.php">Back to Main Data Entry Form indexoriginal.php</a>
     <br><br>
     <table id="students">
       <tr>
@@ -46,11 +45,12 @@
         <th>First Name</th>
         <th>Last Name</th>
         <th>SSN</th>
-        <th>Date of birth</th>
+        <th>Date of birth <br>(yyyy-mm-dd)</th>
         <th>Gender</th>
         <th>Race</th>
         <th>Avatar</th>
         <th>Submissions</th>
+        <th></th>
         <th></th>
         <th></th>
       </tr>
@@ -76,9 +76,45 @@
             <td><?php echo $stdGender ?></td>
             <td><?php echo $stdRace ?></td>
             <td><?php echo $stdAvatar ?></td>
-            <td><?php echo $stdSubmissions ?></td>
+            <td><?php
+                   // Open 'avatar' directory, and read its contents
+                   $path = "C:/xampp/htdocs/PHP_Practice/studentmanager/" . $stdLName . '_' . $stdFName;
+                   $dir = scandir($path);
+
+                   foreach($dir as $token){
+                     if(($token != ".") && ($token != "..")){
+                       if(is_dir($path.'/'.$token)){
+                         $folders[] = $token;
+                       }
+                       else{
+                         $files[] = $token;
+                       }
+                     }
+                   }
+
+                   foreach($folders as $folder){
+                     $newpath = $path.'/'.$folder;
+                     echo "<a href = fileHandler.php?cale=$newpath> [ $folder ] </a>" . "<br>";
+                   }
+
+                   foreach($files as $file){
+                     $newpath = $path.'/'.$file;
+                     echo "<a href = fileHandler.php?file=$file> $file </a>" . "<br>";
+                   }
+
+
+
+
+                ?>
+            </td>
             <td><a href="edit.php?editID=<?php echo $stdID ?>">Edit</a></td>
-            <td><a href="delete.php?deleteID=<?php echo $stdID ?>">Delete</a></td>
+            <!-- <td><a href="delete.php?deleteID=<?php echo $stdID ?>">Delete</a></td> -->
+            <!-- use double quotes for js inside php! -->
+            <td><a onClick="javascript: return confirm('Please confirm deletion')" href="delete.php?deleteID=<?php echo $stdID ?>">Delete</a></td>
+            <td><a href="submitmore.php?submitID=<?php echo $stdID ?>">Submit more</a></td>
+            <td><a href="openfolder.php?openFolderID=<?php echo $stdLName . '_' . $stdFName ?>">View in folder</a></td>
+            <!-- open a new browser tab to view the student profile -->
+            <td><a href="profile.php?viewProfileID=<?php echo $stdID ?>" target="_blank">View profile</a></td>
           </tr>
           <?php
         } // end of while
