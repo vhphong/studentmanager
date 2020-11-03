@@ -78,7 +78,10 @@
             <td><?php echo $stdAvatar ?></td>
             <td><?php
                    // Open 'avatar' directory, and read its contents
-                   $path = "C:/xampp/htdocs/PHP_Practice/studentmanager/" . $stdLName . '_' . $stdFName;
+                   // absolute path
+                   // $path = "C:/xampp/htdocs/PHP_Projects/studentmanager/" . $stdLName . '_' . $stdFName;
+                   // relative path
+                   $path = "./" . $stdLName . '_' . $stdFName;
                    $dir = scandir($path);
 
                    foreach($dir as $token){
@@ -101,10 +104,6 @@
                      $newpath = $path.'/'.$file;
                      echo "<a href = fileHandler.php?file=$file> $file </a>" . "<br>";
                    }
-
-
-
-
                 ?>
             </td>
             <td><a href="edit.php?editID=<?php echo $stdID ?>">Edit</a></td>
@@ -115,6 +114,7 @@
             <td><a href="openfolder.php?openFolderID=<?php echo $stdLName . '_' . $stdFName ?>">View in folder</a></td>
             <!-- open a new browser tab to view the student profile -->
             <td><a href="profile.php?viewProfileID=<?php echo $stdID ?>" target="_blank">View profile</a></td>
+            <td><a href="sendemail.php?emailAddr=<?php echo $stdFName . '_' . $stdLName."@student.uml.edu"?>">Send email</a></td>
           </tr>
           <?php
         } // end of while
