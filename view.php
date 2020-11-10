@@ -50,9 +50,9 @@
         <th>Race</th>
         <th>Avatar</th>
         <th>Submissions</th>
-        <th></th>
-        <th></th>
-        <th></th>
+        <!-- <th></th> -->
+        <!-- <th></th> -->
+        <!-- <th></th> -->
       </tr>
 
       <?php
@@ -77,35 +77,47 @@
             <td><?php echo $stdRace ?></td>
             <td><?php echo $stdAvatar ?></td>
             <td><?php
-                   // Open 'avatar' directory, and read its contents
-                   // absolute path
-                   // $path = "C:/xampp/htdocs/PHP_Projects/studentmanager/" . $stdLName . '_' . $stdFName;
-                   // relative path
-                   $path = "./" . $stdLName . '_' . $stdFName;
-                   $dir = scandir($path);
-
-                   foreach($dir as $token){
-                     if(($token != ".") && ($token != "..")){
-                       if(is_dir($path.'/'.$token)){
-                         $folders[] = $token;
-                       }
-                       else{
-                         $files[] = $token;
-                       }
-                     }
-                   }
-
-                   foreach($folders as $folder){
-                     $newpath = $path.'/'.$folder;
-                     echo "<a href = fileHandler.php?cale=$newpath> [ $folder ] </a>" . "<br>";
-                   }
-
-                   foreach($files as $file){
-                     $newpath = $path.'/'.$file;
-                     echo "<a href = fileHandler.php?file=$file> $file </a>" . "<br>";
-                   }
+                  // Open 'avatar' directory, and read its contents
+                  $dir = "C:/xampp/htdocs/PHP_Projects/studentmanager/" . $stdLName . '_' . $stdFName;
+                  // $dir = "C:/xampp/htdocs/PHP_Projects/studentmanager/Vo1_Phong1";
+                  if (is_dir($dir)) {
+                    if ($handle = opendir($dir)) {
+                      while (false !== ($entry = readdir($handle))) {
+                        if ($entry != "." && $entry != "..") {
+                          echo "$entry" . "<br>";
+                        }
+                      }
+                      closedir($handle);
+                    }
+                  }
+                //   $dir = "C:/xampp/htdocs/PHP_Projects/studentmanager/" . $stdLName . '_' . $stdFName;
+                //   if (is_dir($dir)){
+                //     if ($dh = opendir($dir)){
+                //       while (($file = readdir($dh)) !== false){
+                //         // if ($file != "." && $file != ".."){
+                //           // add link to each file
+                //           // echo "<a href=$file>$file</a><br>";
+                //           echo $file . "<br>";
+                //       // }
+                //   // $dir = "C:/xampp/htdocs/PHP_Projects/studentmanager/" . $stdLName . '_' . $stdFName;
+                //   // if (is_dir($dir)){
+                //   //   if ($dh = opendir($dir)){
+                //   //     while (($file = readdir($dh)) !== false){
+                //   //       if ($file != "." && $file != ".."){
+                //   //         echo $file . "<br>";
+                //   //         // add link to each file
+                //   //         echo "<a href=$dir/$file>$file</a><br>";
+                //   //         echo $file . "<br>";
+                //   //       }
+                //   //     }
+                //       // close the directory
+                //       closedir($dh);
+                //     }
+                //   }
+                // }
                 ?>
             </td>
+
             <td><a href="edit.php?editID=<?php echo $stdID ?>">Edit</a></td>
             <!-- <td><a href="delete.php?deleteID=<?php echo $stdID ?>">Delete</a></td> -->
             <!-- use double quotes for js inside php! -->
