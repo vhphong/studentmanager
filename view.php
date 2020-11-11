@@ -77,44 +77,55 @@
             <td><?php echo $stdRace ?></td>
             <td><?php echo $stdAvatar ?></td>
             <td><?php
-                  // Open 'avatar' directory, and read its contents
-                  $dir = "C:/xampp/htdocs/PHP_Projects/studentmanager/" . $stdLName . '_' . $stdFName;
-                  // $dir = "C:/xampp/htdocs/PHP_Projects/studentmanager/Vo1_Phong1";
-                  if (is_dir($dir)) {
-                    if ($handle = opendir($dir)) {
+                  // Open student's directory, and read its contents
+                  // absolute path
+                  $studentFolder = "C:/xampp/htdocs/PHP_Projects/studentmanager/" . $stdLName . '_' . $stdFName;
+                  // relative path
+                  $studentFolder = "./" . $stdLName . '_' . $stdFName;
+                  if (!is_dir($studentFolder)) {
+                    echo "Folder " . $stdLName . '_' . $stdFName . " is not found.";
+                  }
+                  else {
+                    if ($handle = opendir($studentFolder)) {
                       while (false !== ($entry = readdir($handle))) {
                         if ($entry != "." && $entry != "..") {
-                          echo "$entry" . "<br>";
+                          // echo "$entry" . "<br>";
+                          echo "<a href = $entry> $entry </a>" . "<br>";
                         }
                       }
                       closedir($handle);
                     }
                   }
-                //   $dir = "C:/xampp/htdocs/PHP_Projects/studentmanager/" . $stdLName . '_' . $stdFName;
-                //   if (is_dir($dir)){
-                //     if ($dh = opendir($dir)){
-                //       while (($file = readdir($dh)) !== false){
-                //         // if ($file != "." && $file != ".."){
-                //           // add link to each file
-                //           // echo "<a href=$file>$file</a><br>";
-                //           echo $file . "<br>";
-                //       // }
-                //   // $dir = "C:/xampp/htdocs/PHP_Projects/studentmanager/" . $stdLName . '_' . $stdFName;
-                //   // if (is_dir($dir)){
-                //   //   if ($dh = opendir($dir)){
-                //   //     while (($file = readdir($dh)) !== false){
-                //   //       if ($file != "." && $file != ".."){
-                //   //         echo $file . "<br>";
-                //   //         // add link to each file
-                //   //         echo "<a href=$dir/$file>$file</a><br>";
-                //   //         echo $file . "<br>";
-                //   //       }
-                //   //     }
-                //       // close the directory
-                //       closedir($dh);
-                //     }
-                //   }
-                // }
+
+                  // ===================================================================================
+
+                  // relative path
+                  // $studentFolder = "./" . $stdLName . '_' . $stdFName;
+                  // $dir = scandir($studentFolder);
+                  //
+                  // foreach($dir as $token){
+                  //   if(($token != ".") && ($token != "..")){
+                  //     if(is_dir($studentFolder.'/'.$token)){
+                  //       $folders[] = $token;
+                  //     }
+                  //     else{
+                  //       $files[] = $token;
+                  //     }
+                  //   }
+                  // }
+                  //
+                  // foreach($folders as $folder){
+                  //   $newpath = $studentFolder.'/'.$folder;
+                  //   echo "<a href = fileHandler.php?cale=$newpath> [ $folder ] </a>" . "<br>";
+                  // }
+                  //
+                  // foreach($files as $file){
+                  //   $newpath = $studentFolder.'/'.$file;
+                  //   echo "<a href = fileHandler.php?file=$file> $file </a>" . "<br>";
+                  // }
+
+                  // ===================================================================================
+
                 ?>
             </td>
 

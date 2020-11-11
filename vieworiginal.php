@@ -50,9 +50,9 @@
         <th>Race</th>
         <th>Avatar</th>
         <th>Submissions</th>
-        <th></th>
-        <th></th>
-        <th></th>
+        <!-- <th></th> -->
+        <!-- <th></th> -->
+        <!-- <th></th> -->
       </tr>
 
       <?php
@@ -77,36 +77,58 @@
             <td><?php echo $stdRace ?></td>
             <td><?php echo $stdAvatar ?></td>
             <td><?php
-                   // Open 'avatar' directory, and read its contents
-                   $path = "C:/xampp/htdocs/PHP_Practice/studentmanager/" . $stdLName . '_' . $stdFName;
-                   $dir = scandir($path);
+                  // Open student's directory, and read its contents
+                  // absolute path
+                  $studentFolder = "C:/xampp/htdocs/PHP_Projects/studentmanager/" . $stdLName . '_' . $stdFName;
+                  // relative path
+                  $studentFolder = "./" . $stdLName . '_' . $stdFName;
+                  if (!is_dir($studentFolder)) {
+                    echo "Folder " . $stdLName . '_' . $stdFName . " is not found.";
+                  }
+                  else {
+                    if ($handle = opendir($studentFolder)) {
+                      while (false !== ($entry = readdir($handle))) {
+                        if ($entry != "." && $entry != "..") {
+                          // echo "$entry" . "<br>";
+                          echo "<a href = $entry> $entry </a>" . "<br>";
+                        }
+                      }
+                      closedir($handle);
+                    }
+                  }
 
-                   foreach($dir as $token){
-                     if(($token != ".") && ($token != "..")){
-                       if(is_dir($path.'/'.$token)){
-                         $folders[] = $token;
-                       }
-                       else{
-                         $files[] = $token;
-                       }
-                     }
-                   }
+                  // ===================================================================================
 
-                   foreach($folders as $folder){
-                     $newpath = $path.'/'.$folder;
-                     echo "<a href = fileHandler.php?cale=$newpath> [ $folder ] </a>" . "<br>";
-                   }
+                  // relative path
+                  // $studentFolder = "./" . $stdLName . '_' . $stdFName;
+                  // $dir = scandir($studentFolder);
+                  //
+                  // foreach($dir as $token){
+                  //   if(($token != ".") && ($token != "..")){
+                  //     if(is_dir($studentFolder.'/'.$token)){
+                  //       $folders[] = $token;
+                  //     }
+                  //     else{
+                  //       $files[] = $token;
+                  //     }
+                  //   }
+                  // }
+                  //
+                  // foreach($folders as $folder){
+                  //   $newpath = $studentFolder.'/'.$folder;
+                  //   echo "<a href = fileHandler.php?cale=$newpath> [ $folder ] </a>" . "<br>";
+                  // }
+                  //
+                  // foreach($files as $file){
+                  //   $newpath = $studentFolder.'/'.$file;
+                  //   echo "<a href = fileHandler.php?file=$file> $file </a>" . "<br>";
+                  // }
 
-                   foreach($files as $file){
-                     $newpath = $path.'/'.$file;
-                     echo "<a href = fileHandler.php?file=$file> $file </a>" . "<br>";
-                   }
-
-
-
+                  // ===================================================================================
 
                 ?>
             </td>
+
             <td><a href="edit.php?editID=<?php echo $stdID ?>">Edit</a></td>
             <!-- <td><a href="delete.php?deleteID=<?php echo $stdID ?>">Delete</a></td> -->
             <!-- use double quotes for js inside php! -->
@@ -115,6 +137,7 @@
             <td><a href="openfolder.php?openFolderID=<?php echo $stdLName . '_' . $stdFName ?>">View in folder</a></td>
             <!-- open a new browser tab to view the student profile -->
             <td><a href="profile.php?viewProfileID=<?php echo $stdID ?>" target="_blank">View profile</a></td>
+            <td><a href="sendemail.php?emailAddr=<?php echo $stdFName . '_' . $stdLName."@student.uml.edu"?>">Send email</a></td>
           </tr>
           <?php
         } // end of while
