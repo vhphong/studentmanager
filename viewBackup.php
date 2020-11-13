@@ -79,7 +79,7 @@
             <td><?php
                   // Open student's directory, and read its contents
                   // absolute path
-                  $studentFolder = "C:/xampp/htdocs/PHP_Projects/studentmanager/" . $stdLName . '_' . $stdFName;
+                  // $studentFolder = "C:/xampp/htdocs/PHP_Projects/studentmanager/" . $stdLName . '_' . $stdFName;
                   // relative path
                   $studentFolder = "./" . $stdLName . '_' . $stdFName;
                   if (!is_dir($studentFolder)) {
@@ -90,8 +90,11 @@
                       while (false !== ($entry = readdir($handle))) {
                         if ($entry != "." && $entry != "..") {
                           // echo "$entry" . "<br>";
-                          echo "<a href = $entry> $entry </a>" . "<br>";
+                          // echo "<a href = $entry> $entry </a>" . "<br>";
+                          $newpath = $studentFolder.'/'.$entry;
+                          echo "<a href = $newpath> $entry </a>" . "<br>";
                         }
+                        // echo "<a href = fileHandler.php?file=$entry> $entry </a>" . "<br>";
                       }
                       closedir($handle);
                     }

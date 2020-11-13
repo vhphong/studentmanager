@@ -79,7 +79,7 @@
             <td><?php
                   // Open student's directory, and read its contents
                   // absolute path
-                  $studentFolder = "C:/xampp/htdocs/PHP_Projects/studentmanager/" . $stdLName . '_' . $stdFName;
+                  // $studentFolder = "C:/xampp/htdocs/PHP_Projects/studentmanager/" . $stdLName . '_' . $stdFName;
                   // relative path
                   $studentFolder = "./" . $stdLName . '_' . $stdFName;
                   if (!is_dir($studentFolder)) {
@@ -90,42 +90,14 @@
                       while (false !== ($entry = readdir($handle))) {
                         if ($entry != "." && $entry != "..") {
                           // echo "$entry" . "<br>";
-                          echo "<a href = $entry> $entry </a>" . "<br>";
+                          // echo "<a href = $entry> $entry </a>" . "<br>";
+                          $newpath = $studentFolder . '/' . $entry;
+                          echo "<a href = $newpath> $entry </a>" . "<br>";
                         }
                       }
                       closedir($handle);
                     }
                   }
-
-                  // ===================================================================================
-
-                  // relative path
-                  // $studentFolder = "./" . $stdLName . '_' . $stdFName;
-                  // $dir = scandir($studentFolder);
-                  //
-                  // foreach($dir as $token){
-                  //   if(($token != ".") && ($token != "..")){
-                  //     if(is_dir($studentFolder.'/'.$token)){
-                  //       $folders[] = $token;
-                  //     }
-                  //     else{
-                  //       $files[] = $token;
-                  //     }
-                  //   }
-                  // }
-                  //
-                  // foreach($folders as $folder){
-                  //   $newpath = $studentFolder.'/'.$folder;
-                  //   echo "<a href = fileHandler.php?cale=$newpath> [ $folder ] </a>" . "<br>";
-                  // }
-                  //
-                  // foreach($files as $file){
-                  //   $newpath = $studentFolder.'/'.$file;
-                  //   echo "<a href = fileHandler.php?file=$file> $file </a>" . "<br>";
-                  // }
-
-                  // ===================================================================================
-
                 ?>
             </td>
 
