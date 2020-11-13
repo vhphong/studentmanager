@@ -43,19 +43,23 @@
          // Get images from the database
          $query = $dbconnection->query("SELECT photo FROM studentinfo ORDER BY sid DESC");
 
-         if($query->num_rows > 0){
-           while($row = $query->fetch_assoc()) {
-             $imageURL = $studentFolder . '/' . $row["photo"];
-             // ?><img src="<?php echo $imageURL; ?>" alt= "student's avatar" style="width:25%" /><?php
-             echo "<img src=$imageURL ";
-           }
+         // if($query->num_rows > 0){
+           // while($row = $query->fetch_assoc()) {
+             // $imageURL = $studentFolder . '/' . $row["photo"];
+             // if (!$imageURL) {
+               // echo "no image";
+             // }
+             // else {
+               ?><img src="<?php echo $studentFolder.'/'.$studentFolder.".jpg" ?>" alt= "student's avatar" style="width:25%" /><?php
+             // }
+
+             // echo "<img src=$imageURL ";
+           // }
          }
          else {
            ?><p>No image(s) found...</p><?php
-
-
          }
-       }
+       // }
      ?>
      <br>
      <h3><b>First Name: <?php echo $stdFName ; ?></b></h3>
