@@ -91,8 +91,13 @@
                         if ($entry != "." && $entry != "..") {
                           // echo "$entry" . "<br>";
                           // echo "<a href = $entry> $entry </a>" . "<br>";
-                          $newpath = $studentFolder . '/' . $entry;
-                          echo "<a href = $newpath> $entry </a>" . "<br>";
+                          if (!$entry) {
+                            echo "not a file";
+                          }
+                          else {
+                            $newpath = $studentFolder . '/' . $entry;
+                            echo "<a href = $newpath> $entry </a>" . "<br>";
+                          }
                         }
                       }
                       closedir($handle);
