@@ -29,9 +29,10 @@
    <body>
      <h4>profile.php</h4>
      <h2>Student's Profile</h2>
-     <a href="index.php">Back to Main Data Entry Form index.php</a>
+     <a href="index.php">Back to Main Data Entry Form</a>
      <br>
-     <br>
+     <a href="view.php">Back to View Students Data</a>
+     <br><br>
 
      <?php
        if (isset($_GET['viewProfileID'])) {
@@ -45,17 +46,18 @@
          if($query->num_rows > 0){
            while($row = $query->fetch_assoc()) {
              $imageURL = $studentFolder . '/' . $row["photo"];
-             ?>
-             <img src="<?php echo $imageURL; ?>" alt= "student's avatar" style="width:25%" />
-           <?php }
+             // ?><img src="<?php echo $imageURL; ?>" alt= "student's avatar" style="width:25%" /><?php
+             echo "<img src=$imageURL ";
+           }
          }
          else {
-           ?>
-           <p>No image(s) found...</p>
-           <?php
+           ?><p>No image(s) found...</p><?php
+
+
          }
        }
      ?>
+     <br>
      <h3><b>First Name: <?php echo $stdFName ; ?></b></h3>
      <h3><b>Last Name: <?php echo $stdLName ; ?></b></h3>
      <h4>SSN: <?php echo $stdSSN; ?></h4>
@@ -66,37 +68,27 @@
        <?php
          // Open student's directory, and read its contents
          // absolute path
-         // $path = "C:/xampp/htdocs/PHP_Projects/studentmanager/" . $stdLName . '_' . $stdFName;
+         // $studentFolder = "C:/xampp/htdocs/PHP_Projects/studentmanager/" . $stdLName . '_' . $stdFName;
          // relative path
-         $path = "./" . $stdLName . '_' . $stdFName;
-
-         if (!is_dir($path)) {
-           echo '<script>alert("Folder of student is not found.")</script>';
+         $studentFolder = "./" . $stdLName . '_' . $stdFName;
+         if (!is_dir($studentFolder)) {
+           echo "Folder " . $stdLName . '_' . $stdFName . " is not found.";
          }
          else {
-           $dir = scandir($path);
-
-           foreach($dir as $token){
-             if(($token != ".") && ($token != "..")){
-               if(is_dir($path.'/'.$token)){
-                 $folders[] = $token; // search for folders
-               }
-               else{
-                 $files[] = $token;   // search for files
+           if ($handle = opendir($studentFolder)) {
+             while (false !== ($entry = readdir($handle))) {
+               if ($entry != "." && $entry != "..") {
+                 // echo "$entry" . "<br>";
+                 if (!$entry) {
+                   echo "not a file";
+                 }
+                 else {
+                   $newpath = $studentFolder . '/' . $entry;
+                   echo "<a href = $newpath> $entry </a>" . "<br>";
+                 }
                }
              }
-           }
-
-           // display folders
-           foreach($folders as $folder){
-             $newpath = $path.'/'.$folder;
-             echo "<a href = fileHandler.php?cale=$newpath> [ $folder ] </a>" . "<br>";
-           }
-
-           // display files
-           foreach($files as $file){
-             $newpath = $path.'/'.$file;
-             echo "<a href = fileHandler.php?file=$file> $file </a>" . "<br>";
+             closedir($handle);
            }
          }
        ?>
