@@ -28,16 +28,14 @@
           $fNameError = "First name is required.";
         }
         else {
-          // $stdFName = test_input($_POST['fname']);
-          $stdFName = $_POST['fname'];
+          $stdFName = test_input($_POST['fname']);
         }
 
         if (empty($_POST['lname'])) {
           $lNameError = "Last name is required.";
         }
         else {
-          // $stdLName = test_input($_POST['lname']);
-          $stdLName = $_POST['lname'];
+          $stdLName = test_input($_POST['lname']);
         }
 
         if (empty($_POST['birthday'])) {
@@ -45,7 +43,7 @@
         }
         else {
           // $stdDOB = test_input($_POST['birthday']);
-          $stdDOB = $_POST['birthday'];
+          $stdDOB = test_input($_POST['birthday']);
         }
 
         if (empty($_POST['stdgender'])) {
@@ -53,15 +51,14 @@
         }
         else {
           // $stdGender = test_input($_POST['stdgender']);
-          $stdGender = $_POST['stdgender'];
+          $stdGender = test_input($_POST['stdgender']);
         }
 
         if (empty($_POST['stdrace'])) {
           $raceError = "Race is required.";
         }
         else {
-          // $stdRace = test_input($_POST['stdrace']);
-          $stdRace = $_POST['stdrace'];
+          $stdRace = test_input($_POST['stdrace']);
         }
 
         if (!empty($_POST['fname']) && !empty($_POST['lname']) && !empty($_POST['birthday']) && !empty($_POST['stdgender']) && !empty($_POST['stdrace'])) {
@@ -166,6 +163,13 @@
 
       if (isset($_POST['display'])) {   // if "VIEW RECORDS" button was pressed
         header("location:view.php");
+      }
+
+      function test_input($data){
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
       }
 
 
