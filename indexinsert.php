@@ -61,12 +61,6 @@
     	    // disallowed submission file types
       	  $disallowed_submission_file_types = ['exe','msi','bat'];
 
-          // path to the directory of each student. Folder name pattern: LastName_FirstName
-          $studentFolder = $stdLName . '_' . $stdFName;
-
-          // rename file into Last_First.jpg/png/bmp pattern
-          $avatarPath     = $studentFolder . "/" . $newAvatarFileName;
-          $submissionPath = $studentFolder . "/" . $submissionName;
 
           // check for the validation of the file types
           if (!in_array($avatarExtension, $allowed_avatar_file_types) || ($avatarSize > 5000000) || in_array($submissionExtension, $disallowed_submission_file_types)) {
@@ -75,6 +69,13 @@
           else {
             $queryInsert = "INSERT INTO studentinfo(sid, firstname, lastname, ssn, dob, gender, race, photo, submission)
                             VALUES ('', '$stdFName', '$stdLName', '$stdSSN', '$stdDOB', '$stdGender', '$stdRace', '$newAvatarFileName', '$submissionName')";
+
+            // path to the directory of each student. Folder name pattern: LastName_FirstName
+            $studentFolder = $stdLName . '_' . $stdFName;
+
+            // rename file into Last_First.jpg/png/bmp pattern
+            $avatarPath     = $studentFolder . "/" . $newAvatarFileName;
+            $submissionPath = $studentFolder . "/" . $submissionName;
 
             // make a full permission folder for the student to store avatar and submissions
             // create directory if not exists
