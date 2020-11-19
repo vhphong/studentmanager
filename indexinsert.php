@@ -17,17 +17,46 @@
       // if "INSERT" button was pressed
       if (isset($_POST['savedata'])) {
         // check for null values
-        if (empty($_POST['fname']) || empty($_POST['lname']) || empty($_POST['birthday']) || empty($_POST['stdgender']) || empty($_POST['stdrace'])) {
-          // header("location:failed.php");
-          echo '<script>alert("Please fill in First Name, Last Name, DOB, Gender and Race.")</script>';
-          header("location:index.php");
+        // if (empty($_POST['fname']) || empty($_POST['lname']) || empty($_POST['birthday']) || empty($_POST['stdgender']) || empty($_POST['stdrace'])) {
+        //   echo '<script>alert("First Name, Last Name, DOB, Gender and Race required.")</script>';
+        //   header("location:index.php");
+        // }
+
+        // validate First Name
+        if (empty($_POST['fname'])) {
+          $fNameErr = "First Name is required";
+        }
+        else {
+          $stdFName = $_POST['fname'];
+        }
+
+        if (empty($_POST['lname'])) {
+          $lNameErr = "Last Name is required";
+        }
+        else {
+          $stdLName = $_POST['lname'];
+        }
+
+        if (empty($_POST['birthday'])) {
+          $dobErr = "Date of birth is required";
+        }
+        else {
+          $stdDOB = $_POST['birthday'];
+        }
+
+        if (empty($_POST['stdgender'])) {
+          $genderErr = "Gender is required";
+        }
+
+        if (empty($_POST['stdrace'])) {
+          $raceErr = "Race is required";
         }
         else {
           $stdID = $_POST['stdid'];
-          $stdFName = $_POST['fname'];
-          $stdLName = $_POST['lname'];
+          // $stdFName = $_POST['fname'];
+          // $stdLName = $_POST['lname'];
           $stdSSN = $_POST['ss'];
-          $stdDOB = $_POST['birthday'];
+          // $stdDOB = $_POST['birthday'];
           $stdGender = $_POST['stdgender'];
           $stdRace = $_POST['stdrace'];
           $stdAvatar = $_POST['stdavatar'];
@@ -129,7 +158,7 @@
     <h2>Student Information Manager</h2>
     <h3>Main Data Entry Form</h3>
     <p><span class="error">* required field</span></p>
-    <form action="" method="post" enctype="multipart/form-data">
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data">
       <table>
         <tr>
           <td>SID</td>
@@ -139,12 +168,12 @@
         </tr>
         <tr>
           <td>First Name</td>
-          <td><input type="text" name="fname">
+          <td><input type="text" name="fname" value="<?php echo $stdFName; ?>">
           <span class="error">* <?php echo $fNameErr;?></span></td>
         </tr>
         <tr>
           <td>Last Name</td>
-          <td><input type="text" name="lname">
+          <td><input type="text" name="lname" value="<?php echo $stdLName; ?>">
           <span class="error">* <?php echo $lNameErr;?></span></td>
         </tr>
         <tr>
@@ -153,13 +182,13 @@
         </tr>
         <tr>
           <td>Date of birth</td>
-          <td><input type="date" name="birthday"><span class="error">* <?php echo $dobErr;?></span></td>
+          <td><input type="date" name="birthday" value="<?php echo $stdDOB; ?>"><span class="error">* <?php echo $dobErr;?></span></td>
         </tr>
         <tr>
           <td>Gender</td>
-          <td><input type="radio" name="stdgender" value="Male">Male
-              <input type="radio" name="stdgender" value="Female">Female
-              <input type="radio" name="stdgender" value="Other">Other<span class="error">* <?php echo $genderErr;?></span></td>
+          <td><input type="radio" name="stdgender" value="Male" value="<?php echo $stdGender ?>">Male
+              <input type="radio" name="stdgender" value="Female" value="<?php echo $stdGender ?>">Female
+              <input type="radio" name="stdgender" value="Other" value="<?php echo $stdGender ?>">Other<span class="error">* <?php echo $genderErr;?></span></td>
         </tr>
         <tr>
           <td>Race</td>
