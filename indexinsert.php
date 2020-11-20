@@ -17,46 +17,18 @@
       // if "INSERT" button was pressed
       if (isset($_POST['savedata'])) {
         // check for null values
-        // if (empty($_POST['fname']) || empty($_POST['lname']) || empty($_POST['birthday']) || empty($_POST['stdgender']) || empty($_POST['stdrace'])) {
-        //   echo '<script>alert("First Name, Last Name, DOB, Gender and Race required.")</script>';
-        //   header("location:index.php");
-        // }
-
-        // validate First Name
-        if (empty($_POST['fname'])) {
-          $fNameErr = "First Name is required";
-        }
-        else {
-          $stdFName = $_POST['fname'];
+        if (empty($_POST['fname']) || empty($_POST['lname']) || empty($_POST['birthday']) || empty($_POST['stdgender']) || empty($_POST['stdrace'])) {
+          // header("location:failed.php");
+          echo '<script>alert("Please fill in First Name, Last Name, DOB, Gender and Race.")</script>';
+          header("location:index.php");
         }
 
-        if (empty($_POST['lname'])) {
-          $lNameErr = "Last Name is required";
-        }
-        else {
-          $stdLName = $_POST['lname'];
-        }
-
-        if (empty($_POST['birthday'])) {
-          $dobErr = "Date of birth is required";
-        }
-        else {
-          $stdDOB = $_POST['birthday'];
-        }
-
-        if (empty($_POST['stdgender'])) {
-          $genderErr = "Gender is required";
-        }
-
-        if (empty($_POST['stdrace'])) {
-          $raceErr = "Race is required";
-        }
-        else {
+        if (empty($_POST['fname']) && !empty($_POST['lname']) && !empty($_POST['birthday']) && !empty($_POST['stdgender']) && !empty($_POST['stdrace'])) {
           $stdID = $_POST['stdid'];
-          // $stdFName = $_POST['fname'];
-          // $stdLName = $_POST['lname'];
+          $stdFName = $_POST['fname'];
+          $stdLName = $_POST['lname'];
           $stdSSN = $_POST['ss'];
-          // $stdDOB = $_POST['birthday'];
+          $stdDOB = $_POST['birthday'];
           $stdGender = $_POST['stdgender'];
           $stdRace = $_POST['stdrace'];
           $stdAvatar = $_POST['stdavatar'];
@@ -90,33 +62,41 @@
     	    // disallowed submission file types
       	  $disallowed_submission_file_types = ['exe','msi','bat'];
 
+          // destination of the file on the server folder: avatars
+          // $avatarFolder  = 'avatars/' . $avatarName;
+          // destination of the file on the server folder: submissions
+          // $submissionFolder  = 'submissions/' . $submissionName;
+
+          // path to the directory of each student. Folder name pattern: LastName_FirstName
+          $studentFolder = $stdLName . '_' . $stdFName;
+          // making a full permission directory for each student that stores a student 's avatar and submissions
+          // create directory if not exists
+          // if (!file_exists($studentFolder)) {
+          //   mkdir($studentFolder, 0777, true);
+          // }
+          if (!is_dir($studentFolder)){
+            mkdir($studentFolder, 0777, true);
+          }
+
+          // rename file into Last_First.jpg/png/bmp pattern
+          $avatarPath     = $studentFolder . "/" . $newAvatarFileName;
+          $submissionPath = $studentFolder . "/" . $submissionName;
 
           // check for the validation of the file types
           if (!in_array($avatarExtension, $allowed_avatar_file_types) || ($avatarSize > 5000000) || in_array($submissionExtension, $disallowed_submission_file_types)) {
+            // echo "You file extension must be .jpg, .png or .bmp";
+            // header("location:failed.php");
             echo '<script>alert("Wrong avatar/submission(s) file type/size.")</script>';
           }
           else {
             $queryInsert = "INSERT INTO studentinfo(sid, firstname, lastname, ssn, dob, gender, race, photo, submission)
                             VALUES ('', '$stdFName', '$stdLName', '$stdSSN', '$stdDOB', '$stdGender', '$stdRace', '$newAvatarFileName', '$submissionName')";
 
-            // path to the directory of each student. Folder name pattern: LastName_FirstName
-            $studentFolder = $stdLName . '_' . $stdFName;
-
-            // rename file into Last_First.jpg/png/bmp pattern
-            $avatarPath     = $studentFolder . "/" . $newAvatarFileName;
-            $submissionPath = $studentFolder . "/" . $submissionName;
-
-            // make a full permission folder for the student to store avatar and submissions
-            // create directory if not exists
-            if (!is_dir($studentFolder)){
-              mkdir($studentFolder, 0777, true);
-            }
-
             if (mysqli_query($dbconnection, $queryInsert)) {
               header("location:view.php");
             }
             else {
-              echo '<script>alert("Save data failed.")</script>';
+              header("location:failed.php");
             }
 
             // move the avatar to avatarPath
@@ -158,22 +138,22 @@
     <h2>Student Information Manager</h2>
     <h3>Main Data Entry Form</h3>
     <p><span class="error">* required field</span></p>
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" enctype="multipart/form-data">
+    <form action="" method="post" enctype="multipart/form-data">
       <table>
         <tr>
           <td>SID</td>
-          <!-- <td><input type="text" name="stdid" readonly="readonly"</td> -->
-          <td><input type="text" name="stdid" disabled="disabled"</td>
+          <td><input type="text" name="stdid" readonly="readonly"</td>
+          <!-- <td><input type="text" name="stdid" disabled="disabled"</td> -->
           <!-- <td><input type="text" name="stdid"</td> -->
         </tr>
         <tr>
           <td>First Name</td>
-          <td><input type="text" name="fname" value="<?php echo $stdFName; ?>">
+          <td><input type="text" name="fname">
           <span class="error">* <?php echo $fNameErr;?></span></td>
         </tr>
         <tr>
           <td>Last Name</td>
-          <td><input type="text" name="lname" value="<?php echo $stdLName; ?>">
+          <td><input type="text" name="lname">
           <span class="error">* <?php echo $lNameErr;?></span></td>
         </tr>
         <tr>
@@ -182,13 +162,13 @@
         </tr>
         <tr>
           <td>Date of birth</td>
-          <td><input type="date" name="birthday" value="<?php echo $stdDOB; ?>"><span class="error">* <?php echo $dobErr;?></span></td>
+          <td><input type="date" name="birthday"><span class="error">* <?php echo $dobErr;?></span></td>
         </tr>
         <tr>
           <td>Gender</td>
-          <td><input type="radio" name="stdgender" value="Male" value="<?php echo $stdGender ?>">Male
-              <input type="radio" name="stdgender" value="Female" value="<?php echo $stdGender ?>">Female
-              <input type="radio" name="stdgender" value="Other" value="<?php echo $stdGender ?>">Other<span class="error">* <?php echo $genderErr;?></span></td>
+          <td><input type="radio" name="stdgender" value="Male">Male
+              <input type="radio" name="stdgender" value="Female">Female
+              <input type="radio" name="stdgender" value="Other">Other<span class="error">* <?php echo $genderErr;?></span></td>
         </tr>
         <tr>
           <td>Race</td>
