@@ -57,14 +57,7 @@
 
       // path to the directory of each student. Folder name pattern: LastName_FirstName
       $studentFolder = $stdLName . '_' . $stdFName;
-      // making a full permission directory for each student that stores a student 's avatar and submissions
-      // create directory if not exists
-      // if (!file_exists($studentFolder)) {
-      //   mkdir($studentFolder, 0777, true);
-      // }
-      if (!is_dir($studentFolder)){
-        mkdir($studentFolder, 0777, true);
-      }
+
 
       // rename file into Last_First.jpg/png/bmp pattern
       $avatarPath     = $studentFolder . "/" . $newAvatarFileName;
@@ -79,28 +72,42 @@
         $queryInsert = "INSERT INTO studentinfo(sid, firstname, lastname, ssn, dob, gender, race, photo, submission)
                         VALUES ('', '$stdFName', '$stdLName', '$stdSSN', '$stdDOB', '$stdGender', '$stdRace', '$newAvatarFileName', '$submissionName')";
 
-        if (mysqli_query($dbconnection, $queryInsert)) {
-          header("location:view.php");
+        if (!mysqli_query($dbconnection, $queryInsert)) {
+          echo '<script>alert("$queryInsert failed.")</script>';
         }
         else {
-          header("location:failed.php");
+          header("location:view.php");
+
+          // making a full permission directory for each student that stores a student 's avatar and submissions
+          // create directory if not exists
+          // if (!file_exists($studentFolder)) {
+          //   mkdir($studentFolder, 0777, true);
+          // }
+          if (!is_dir($studentFolder)){
+            mkdir($studentFolder, 0777, true);
+          }
+
+          // move the avatar to avatarPath
+          if (move_uploaded_file($avatarTemp, $avatarPath)) {
+            header("location:view.php");
+          }
+          else {
+            header("location:failed.php");
+          }
+
+          // move the submission to submissionPath
+          if (move_uploaded_file($submissionTemp, $submissionPath)) {
+            header("location:view.php");
+          }
+          else {
+            header("location:failed.php");
+          }
+
+
         }
 
-		    // move the avatar to avatarPath
-        if (move_uploaded_file($avatarTemp, $avatarPath)) {
-          header("location:view.php");
-        }
-        else {
-          header("location:failed.php");
-        }
 
-		    // move the submission to submissionPath
-        if (move_uploaded_file($submissionTemp, $submissionPath)) {
-          header("location:view.php");
-        }
-        else {
-          header("location:failed.php");
-        }
+
       }
     }
   } // end of if (isset($_POST['savedata']))
