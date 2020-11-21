@@ -58,7 +58,6 @@
       // path to the directory of each student. Folder name pattern: LastName_FirstName
       $studentFolder = $stdLName . '_' . $stdFName;
 
-
       // rename file into Last_First.jpg/png/bmp pattern
       $avatarPath     = $studentFolder . "/" . $newAvatarFileName;
       $submissionPath = $studentFolder . "/" . $submissionName;
@@ -102,12 +101,7 @@
           else {
             header("location:failed.php");
           }
-
-
         }
-
-
-
       }
     }
   } // end of if (isset($_POST['savedata']))
