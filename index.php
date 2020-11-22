@@ -56,6 +56,11 @@
           }
         }
         else {
+          $stdFName = $_POST['fname'];
+          $stdLName = $_POST['lname'];
+          $stdDOB = $_POST['birthday'];
+          $stdGender = $_POST['stdgender'];
+          $stdRace = $_POST['stdrace'];
           if (isset($_POST['stdid'])) {
             $stdID = $_POST['stdid'];
           }
@@ -139,7 +144,7 @@
               header("location:view.php");
             }
             else {
-              header("location:failed.php");
+              echo '<script>alert("Upload avatar failed.")</script>';
             }
 
             // move the submission to submissionPath
@@ -147,7 +152,7 @@
               header("location:view.php");
             }
             else {
-              header("location:failed.php");
+              echo '<script>alert("Upload submissions failed.")</script>';
             }
           }
         }
@@ -157,6 +162,11 @@
       if (isset($_POST['display'])) {
         header("location:view.php");
       }  // end of elseif (isset($_POST['display']))
+
+      // if "CLEAR FORM" button was pressed
+      if (isset($_POST['clear'])) {
+        header("location:index.php");
+      }
     ?>
 
 
@@ -227,6 +237,7 @@
                   <!-- <button type="" name="savedata">SAVE DATA</button> -->
                   <td><input type="submit" name="savedata" value="SAVE DATA"></td>
                   <td><input type="submit" name="display" value="VIEW RECORDS"></td>
+                  <td><input type="submit" name="clear" value="CLEAR FORM"></td>
                 </tr>
               </table>
       </fieldset>
