@@ -17,6 +17,9 @@
     $stdRace = $row['race'];
     $stdAvatar = $row['photo'];
   }
+
+  $fNameErr = $lNameErr = $dobErr = $genderErr = $raceErr = "";
+  $stdID = $stdFName = $stdLName = $stdSSN = $stdDOB = $stdGender = $stdRace = $stdAvatar = $stdSubmissions = "";
 ?>
 
 <!DOCTYPE html>
@@ -24,6 +27,9 @@
   <head>
     <meta charset="utf-8">
     <title>Edit Student 's Information</title>
+    <style>
+      .error {color: #FF0000;}
+    </style>
   </head>
   <body>
     <center>
@@ -35,72 +41,75 @@
     <br>
     <a href="view.php">Back to View Students Data</a>
     <br><br>
-    <form class="" action="update.php?ID=<?php echo $stdID ?>" method="post">
-      <table>
-        <tr>
-          <td>Student ID: </td>
-          <!-- student ID is unchangeable -->
-          <td><input type="text" name="stdid" value="<?php echo $stdID ?>" disabled="disabled"></td>
-        </tr>
-        <tr>
-          <td>First Name: </td>
-          <td><input type="text" name="fname" value="<?php echo $stdFName ?>"></td>
-        </tr>
-        <tr>
-          <td>Last Name: </td>
-          <td><input type="text" name="lname" value="<?php echo $stdLName ?>"></td>
-        </tr>
-        <tr>
-          <td>SSN: </td>
-          <td><input type="text" name="ss" value="<?php echo $stdSSN ?>"></td>
-        </tr>
-        <tr>
-          <td>Date of Birth: </td>
-          <td><input type="text" name="birthday" value="<?php echo $stdDOB ?>"></td>
-        </tr>
-          <td>Gender: </td>
-          <td>
-            <select class="" name="stdgender">
-              <option value="<?php echo $stdGender ?>"><?php echo $stdGender ?></option>
-              <option value="">-- Make a selection --</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-          </td>
-        <tr>
-          <td>Race: </td>
-          <td>
-            <select class="" name="stdrace">
-              <option value="<?php echo $stdRace ?>"><?php echo $stdRace ?></option>
-              <option value="">-- Make a selection --</option>
-              <option value="Hispanic or Latino">Hispanic or Latino</option>
-              <option value="American Indian or Alaska Native (not Hispanic or Latino)">American Indian or Alaska Native (not Hispanic or Latino)</option>
-              <option value="Asian (not Hispanic or Latino)">Asian (not Hispanic or Latino)</option>
-              <option value="Black or African American (not Hispanic or Latino)">Black or African American (not Hispanic or Latino)</option>
-              <option value="Native Hawaiian or Other Pacific Islander (not Hispanic or Latino)">Native Hawaiian or Other Pacific Islander (not Hispanic or Latino)</option>
-              <option value="Two or More Races (not Hispanic or Latino)">Two or More Races (not Hispanic or Latino)</option>
-              <option value="White (not Hispanic or Latino)">White (not Hispanic or Latino)</option>
-              <option value="Opt Out">Opt Out</option>
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td>Avatar: </td>
-          <td><input type="file" name="avatar" value="<?php echo $stdAvatar ?>"></td>
-        </tr>
-        <tr>
-          <td>Submissions: </td>
-          <td><input type="file" name="stdsubmission" value="<?php echo $stdSubmissions ?>"></td>
-        </tr>
-      </table>
-      <br>
-      <tr>
-        <td>
-          <!-- <button type="button" name="update">UPDATE</button> -->
-          <button name="update">UPDATE</button>
-        </td>
-      </tr>
+    <p><span class="error">* required field</span></p>
+    <form action="" method="post" enctype="multipart/form-data">
+      <fieldset>
+        <legend>Personal Information</legend>
+        <table>
+          <tr>
+            <td>SID</td>
+            <!-- <td><input type="text" name="stdid" readonly="readonly"</td> -->
+            <td><input type="text" name="stdid" disabled="disabled"</td>
+            <!-- <td><input type="text" name="stdid"</td> -->
+          </tr>
+          <tr>
+            <td>First Name</td>
+            <td><input type="text" name="fname" value="<?php echo $stdFName ?>">
+                <span class="error">* <?php echo $fNameErr;?></span></td>
+            </tr>
+            <tr>
+              <td>Last Name</td>
+              <td><input type="text" name="lname" value="<?php echo $stdLName ?>">
+                  <span class="error">* <?php echo $lNameErr;?></span></td>
+              </tr>
+              <tr>
+                <td>SSN (Optional)</td>
+                <td><input type="text" name="ss" value="<?php echo $stdSSN ?>" placeholder="xxx-xx-xxxx" pattern="\d{3}-?\d{2}-?\d{4}"></td>
+              </tr>
+              <tr>
+                <td>Date of birth</td>
+                <td><input type="date" name="birthday" value="<?php echo $stdDOB ?>"><span class="error">* <?php echo $dobErr;?></span></td>
+              </tr>
+              <tr>
+                <td>Gender</td>
+                <td><input type="radio" name="stdgender" <?php if (isset($stdGender) && $stdGender=="Female") echo "checked";?> value="Female">Female
+                    <input type="radio" name="stdgender" <?php if (isset($stdGender) && $stdGender=="Male") echo "checked";?> value="Male">Male
+                    <input type="radio" name="stdgender" <?php if (isset($stdGender) && $stdGender=="Other") echo "checked";?> value="Other">Other
+                    <span class="error">* <?php echo $genderErr;?></span>
+                </tr>
+                <tr>
+                  <td>Race</td>
+                  <!-- <td><input type="text" name="race"</td> -->
+                  <td>
+                    <select class="" name="stdrace">
+                      <option value="">-- Make a selection --</option>
+                      <option <?php echo ($stdRace === "Hispanic or Latino")? "selected" : ""; ?> >Hispanic or Latino</option>
+                      <option <?php echo ($stdRace === "American Indian or Alaska Native (not Hispanic or Latino)")? "selected" : ""; ?> >American Indian or Alaska Native (not Hispanic or Latino)</option>
+                      <option <?php echo ($stdRace === "Asian (not Hispanic or Latino)")? "selected" : ""; ?> >Asian (not Hispanic or Latino)</option>
+                      <option <?php echo ($stdRace === "Black or African American (not Hispanic or Latino)")? "selected" : ""; ?> >Black or African American (not Hispanic or Latino)</option>
+                      <option <?php echo ($stdRace === "Native Hawaiian or Other Pacific Islander (not Hispanic or Latino)")? "selected" : ""; ?> >Native Hawaiian or Other Pacific Islander (not Hispanic or Latino)</option>
+                      <option <?php echo ($stdRace === "Two or More Races (not Hispanic or Latino)")? "selected" : ""; ?> >Two or More Races (not Hispanic or Latino)</option>
+                      <option <?php echo ($stdRace === "White (not Hispanic or Latino)")? "selected" : ""; ?> >White (not Hispanic or Latino)</option>
+                      <option <?php echo ($stdRace === "Opt Out")? "selected" : ""; ?> >Opt Out</option>
+                    </select><span class="error">* <?php echo $raceErr;?></span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Avatar</td>
+                  <td><input type="file" name="stdavatar" value="<?php echo $stdAvatar ?>"</td>
+                </tr>
+                <tr>
+                  <td>Submissions</td>
+                  <td><input type="file" name="stdsubmission" value="<?php echo $stdSubmissions ?>" multiple></td>
+                </tr>
+                <tr>
+                  <!-- <button type="" name="savedata">SAVE DATA</button> -->
+                    <td><input type="submit" name="savedata" value="SAVE DATA"></td>
+                    <td><input type="submit" name="display" value="VIEW RECORDS"></td>
+                    <td><input type="submit" name="clear" value="CLEAR FORM"></td>
+                </tr>
+              </table>
+      </fieldset>
     </form>
   </body>
 </html>
