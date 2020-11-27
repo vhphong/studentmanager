@@ -3,18 +3,10 @@
   <head>
     <meta charset="utf-8">
     <title>Student Manager</title>
-    <style media="screen">
-      .error {color: #FF0000;}
-    </style>
   </head>
   <body>
-    <?php
-      $fNameError = $lNameError = $DOBError = $raceError = "";
-    ?>
     <h2>Student Information Manager</h2>
     <h3>Main Data Entry Form</h3>
-
-    <p><span class="error">* required field</span></p>
     <form action="insert.php" method="post" enctype="multipart/form-data">
       <table>
         <tr>
@@ -26,12 +18,10 @@
         <tr>
           <td>First Name</td>
           <td><input type="text" name="fname"</td>
-              <span class="error">* <?php echo $fNameError;?></span>
         </tr>
         <tr>
           <td>Last Name</td>
           <td><input type="text" name="lname"</td>
-              <span class="error">* <?php echo $lNameError;?></span>
         </tr>
         <tr>
           <td>SSN (Optional)</td>
@@ -40,15 +30,12 @@
         <tr>
           <td>Date of birth</td>
           <td><input type="date" name="birthday"</td>
-              <span class="error">* <?php echo $DOBError;?></span>
         </tr>
         <tr>
           <td>Gender</td>
           <td><input type="radio" name="stdgender" value="Male">Male
               <input type="radio" name="stdgender" value="Female">Female
-              <input type="radio" name="stdgender" value="Other">Other
-              <span class="error">* <?php echo $lNameError;?></span>
-          </td>
+              <input type="radio" name="stdgender" value="Other">Other</td>
         </tr>
         <tr>
           <td>Race</td>
@@ -65,7 +52,6 @@
               <option value="White (not Hispanic or Latino)">White (not Hispanic or Latino)</option>
               <option value="Opt Out">Opt Out</option>
             </select>
-            <span class="error">* <?php echo $raceError;?></span>
           </td>
         </tr>
         <tr>
@@ -74,13 +60,15 @@
         </tr>
         <tr>
           <td>Submissions</td>
-          <td><input type="file" name="stdsubmission" multiple></td>
+          <td><input type="file" name="stdsubmission"</td>
         </tr>
         <tr>
+          <!-- <button type="" name="savedata">SAVE DATA</button> -->
           <td><input type="submit" name="savedata" value="SAVE DATA"></td>
           <td><input type="submit" name="display" value="VIEW RECORDS"></td>
         </tr>
       </table>
     </form>
   </body>
+</html>
 </html>

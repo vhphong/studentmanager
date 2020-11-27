@@ -109,7 +109,6 @@
           // validate submission
           // $submissionErr = [];    // Store errors here
 
-          $avatarExtensionsAllowed = ['jpeg','jpg','png','bmp',''];
 
           // name of the name of the actual file to be uploaded
           $avatarName = $_FILES['stdavatar']['name'];
@@ -124,7 +123,8 @@
           // size of the uploaded avatar file
           $avatarSize = $_FILES['stdavatar']['size'];
           // allowed avatar file types
-          // $allowed_avatar_file_types = ['jpg','png','bmp','raw'];
+          $avatarExtensionsAllowed = ['jpeg','jpg','png','bmp',''];
+
           // new avatar file name, patterned: Last_First.jpg/png/bmp
           $newAvatarFileName = $stdLName . '_' . $stdFName . '.' . $avatarExtension;
           $avatarPath = $studentFolder . "/" . $newAvatarFileName;
@@ -151,8 +151,7 @@
             echo '<script>alert("Avatar should 5MB or less.")</script>';
             $errors = "File exceeds maximum size (5MB)";
             $avatarOk = false;
-          }
-          else {
+          } else {
             $avatarOk = true;
           }
 
@@ -184,8 +183,7 @@
             echo '<script>alert("Wrong submission(s) file type.")</script>';
             $errors = "Wrong submission(s) file type.";
             $submissionOk = false;
-          }
-          else {
+          } else {
             $errors = "";
             $submissionOk = true;
           }
@@ -200,8 +198,7 @@
 
             if (mysqli_query($dbconnection, $queryInsert)) {
               header("location:view.php");
-            }
-            else {
+            } else {
               echo '<script>alert("Save data failed.")</script>';
             }
 
@@ -209,27 +206,28 @@
             // create directory if not exists
             if (!is_dir($studentFolder)){
               mkdir($studentFolder, 0777, true);    // 0777: full permission
+            } else {
+              $studentFolder = $stdLName . '_' . $stdFName . '1' ;
+              mkdir($studentFolder, 0777, true);    // 0777: full permission
             }
 
             // move the avatar to avatarPath
             if (move_uploaded_file($avatarTemp, $avatarPath)) {
               header("location:view.php");
-            }
-            else {
+            } else {
               echo '<script>alert("Upload avatar failed.")</script>';
             }
 
             // move the submission to submissionPath
             if (move_uploaded_file($submissionTemp, $submissionPath)) {
               header("location:view.php");
-            }
-            else {
+            } else {
               echo '<script>alert("Upload submissions failed.")</script>';
             }
           } // end: if ($avatarOk===true && $submissionOk===true) / if (empty($errors))
           else {
             foreach ($errors as $err) {
-              echo $err . "These are the errors" . "\n";
+              echo $err . " These are the errors" . "\n";
             }
           }
 
