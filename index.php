@@ -33,6 +33,13 @@
             $stdLName = $_POST['lname'];
           }
 
+          // validate SSN
+          if (empty($_POST['ss'])) {
+            $stdSSN = "000-00-0000";
+          } else {
+            $stdSSN = $_POST['ss'];
+          }
+
           // validate DOB
           if (empty($_POST['birthday'])) {
             $dobErr = "DOB is required.";
@@ -170,8 +177,8 @@
             $submissionOk = false;
           }
           else {
-            $submissionOk = true;
             $errors = "";
+            $submissionOk = true;
           }
 
           if (!empty($errors)) {
@@ -210,14 +217,20 @@
             else {
               echo '<script>alert("Upload submissions failed.")</script>';
             }
-          } // end: if ($avatarOk===true && $submissionOk===true)
+          } // end: if ($avatarOk===true && $submissionOk===true) / if (empty($errors))
+          else {
+            foreach ($errors as $err) {
+              echo $err . "These are the errors" . "\n";
+            }
+          }
+
         }   // end: if all required fields are filled
       }  // end: if (isset($_POST['savedata']))
 
       // if "VIEW RECORDS" button was pressed
       if (isset($_POST['display'])) {
         header("location:view.php");
-      }  // end of elseif (isset($_POST['display']))
+      }
 
       // if "CLEAR FORM" button was pressed
       if (isset($_POST['clear'])) {
@@ -291,9 +304,9 @@
                 </tr>
                 <tr>
                   <!-- <button type="" name="savedata">SAVE DATA</button> -->
-                  <td><input type="submit" name="savedata" value="SAVE DATA"></td>
-                  <td><input type="submit" name="display" value="VIEW RECORDS"></td>
-                  <td><input type="submit" name="clear" value="CLEAR FORM"></td>
+                    <td><input type="submit" name="savedata" value="SAVE DATA"></td>
+                    <td><input type="submit" name="display" value="VIEW RECORDS"></td>
+                    <td><input type="submit" name="clear" value="CLEAR FORM"></td>
                 </tr>
               </table>
       </fieldset>
