@@ -33,6 +33,13 @@
             $stdLName = $_POST['lname'];
           }
 
+          // validate SSN
+          if (empty($_POST['ss'])) {
+            $stdSSN = "000-00-0000";
+          } else {
+            $stdSSN = $_POST['ss'];
+          }
+
           // validate DOB
           if (empty($_POST['birthday'])) {
             $dobErr = "DOB is required.";
@@ -54,7 +61,7 @@
             $stdRace = $_POST['stdrace'];
           }
 
-        }   // end: if a required field is empty
+        }   // end: if any required field is empty
         else {    // if all required fields are filled
           // if (isset($_POST['stdid'])) {
           //   $stdID = $_POST['stdid'];
@@ -64,6 +71,12 @@
           //   $stdSSN = $_POST['ss'];
           // }
 
+          $stdFName = $_POST['fname'];
+          $stdLName = $_POST['lname'];
+          $stdSSN = $_POST['ss'];
+          $stdDOB = $_POST['birthday'];
+          $stdGender = $_POST['stdgender'];
+          $stdRace = $_POST['stdrace'];
           if (isset($_POST['stdavatar'])) {
             $stdAvatar = $_POST['stdavatar'];
           } else {
@@ -73,12 +86,6 @@
           if (isset($_POST['stdsubmission'])) {
             $stdSubmissions = $_POST['stdsubmission'];
           }
-          $stdFName = $_POST['fname'];
-          $stdLName = $_POST['lname'];
-          $stdSSN = $_POST['ss'];
-          $stdDOB = $_POST['birthday'];
-          $stdGender = $_POST['stdgender'];
-          $stdRace = $_POST['stdrace'];
           // $stdAvatar = $_POST['stdavatar'];
           // $stdSubmissions = $_POST['stdsubmission'];
           // path to the folder of each student, patterned: LastName_FirstName
@@ -170,8 +177,8 @@
             $submissionOk = false;
           }
           else {
-            $submissionOk = true;
             $errors = "";
+            $submissionOk = true;
           }
 
           if (!empty($errors)) {
@@ -210,14 +217,20 @@
             else {
               echo '<script>alert("Upload submissions failed.")</script>';
             }
-          } // end: if ($avatarOk===true && $submissionOk===true)
+          } // end: if ($avatarOk===true && $submissionOk===true) / if (empty($errors))
+          else {
+            foreach ($errors as $err) {
+              echo $err . "These are the errors" . "\n";
+            }
+          }
+
         }   // end: if all required fields are filled
       }  // end: if (isset($_POST['savedata']))
 
       // if "VIEW RECORDS" button was pressed
       if (isset($_POST['display'])) {
         header("location:view.php");
-      }  // end of elseif (isset($_POST['display']))
+      }
 
       // if "CLEAR FORM" button was pressed
       if (isset($_POST['clear'])) {
@@ -291,9 +304,9 @@
                 </tr>
                 <tr>
                   <!-- <button type="" name="savedata">SAVE DATA</button> -->
-                  <td><input type="submit" name="savedata" value="SAVE DATA"></td>
-                  <td><input type="submit" name="display" value="VIEW RECORDS"></td>
-                  <td><input type="submit" name="clear" value="CLEAR FORM"></td>
+                    <td><input type="submit" name="savedata" value="SAVE DATA"></td>
+                    <td><input type="submit" name="display" value="VIEW RECORDS"></td>
+                    <td><input type="submit" name="clear" value="CLEAR FORM"></td>
                 </tr>
               </table>
       </fieldset>
