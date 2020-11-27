@@ -15,6 +15,13 @@
       $fNameErr = $lNameErr = $dobErr = $genderErr = $raceErr = "";
       $stdID = $stdFName = $stdLName = $stdSSN = $stdDOB = $stdGender = $stdRace = $stdAvatar = $stdSubmissions = "";
 
+      function test_input($data){
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+      }
+
       // if "INSERT" button was pressed
       if (isset($_POST['savedata'])) {
         // if a required field is empty
@@ -23,14 +30,14 @@
           if (empty($_POST['fname'])) {
             $fNameErr = "First Name is required.";
           } else {
-            $stdFName = $_POST['fname'];
+            $stdFName = test_input($_POST['fname']);
           }
 
           // validate Last Name
           if (empty($_POST['lname'])) {
             $lNameErr = "Last Name is required.";
           } else {
-            $stdLName = $_POST['lname'];
+            $stdLName = test_input($_POST['lname']);
           }
 
           // validate SSN
@@ -71,8 +78,8 @@
           //   $stdSSN = $_POST['ss'];
           // }
 
-          $stdFName = $_POST['fname'];
-          $stdLName = $_POST['lname'];
+          $stdFName = test_input($_POST['fname']);
+          $stdLName = test_input($_POST['lname']);
           $stdSSN = $_POST['ss'];
           $stdDOB = $_POST['birthday'];
           $stdGender = $_POST['stdgender'];
@@ -88,6 +95,8 @@
           }
           // $stdAvatar = $_POST['stdavatar'];
           // $stdSubmissions = $_POST['stdsubmission'];
+
+
           // path to the folder of each student, patterned: LastName_FirstName
           $studentFolder = $stdLName . '_' . $stdFName;
 
@@ -127,7 +136,7 @@
             $avatarOk = false;
           }
 
-          // check if no avatar is uploaded
+          // check if no avatar is uploaded. That 's fine
           if ($avatarExtension == '') {
             $newAvatarFileName = '';
             $avatarOk = true;
