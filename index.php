@@ -11,15 +11,14 @@
     <?php
       // connect to the database
       $dbconnection = mysqli_connect("localhost", "root", "", "dbstudentmanager");
+
       $fNameErr = $lNameErr = $dobErr = $genderErr = $raceErr = "";
       $stdID = $stdFName = $stdLName = $stdSSN = $stdDOB = $stdGender = $stdRace = $stdAvatar = $stdSubmissions = "";
 
       // if "INSERT" button was pressed
       if (isset($_POST['savedata'])) {
-        // check for null values
+        // if a required field is empty
         if (empty($_POST['fname']) || empty($_POST['lname']) || empty($_POST['birthday']) || empty($_POST['stdgender']) || empty($_POST['stdrace'])) {
-          // echo '<script>alert("Please fill in First Name, Last Name, DOB, Gender and Race.")</script>';
-          // header("location:index.php");
           // validate First Name
           if (empty($_POST['fname'])) {
             $fNameErr = "First Name is required.";
@@ -54,89 +53,146 @@
           } else {
             $stdRace = $_POST['stdrace'];
           }
-        }
-        else {
-          $stdFName = $_POST['fname'];
-          $stdLName = $_POST['lname'];
-          $stdDOB = $_POST['birthday'];
-          $stdGender = $_POST['stdgender'];
-          $stdRace = $_POST['stdrace'];
-          if (isset($_POST['stdid'])) {
-            $stdID = $_POST['stdid'];
-          }
-          if (isset($_POST['ss'])) {
-            $stdSSN = $_POST['ss'];
-          }
+
+        }   // end: if a required field is empty
+        else {    // if all required fields are filled
+          // if (isset($_POST['stdid'])) {
+          //   $stdID = $_POST['stdid'];
+          // }
+
+          // if (isset($_POST['ss'])) {
+          //   $stdSSN = $_POST['ss'];
+          // }
+
           if (isset($_POST['stdavatar'])) {
             $stdAvatar = $_POST['stdavatar'];
+          } else {
+            $stdAvatar = "";
           }
+
           if (isset($_POST['stdsubmission'])) {
             $stdSubmissions = $_POST['stdsubmission'];
           }
+          $stdFName = $_POST['fname'];
+          $stdLName = $_POST['lname'];
+          $stdSSN = $_POST['ss'];
+          $stdDOB = $_POST['birthday'];
+          $stdGender = $_POST['stdgender'];
+          $stdRace = $_POST['stdrace'];
+          // $stdAvatar = $_POST['stdavatar'];
+          // $stdSubmissions = $_POST['stdsubmission'];
+          // path to the folder of each student, patterned: LastName_FirstName
+          $studentFolder = $stdLName . '_' . $stdFName;
 
           ////////////////////////////////////////////////////////////
-          // uploads an avatar
-          // name of the uploaded avatar file
+          // validate avatar
+          $errors = [];    // Store errors here
+          $avatarOk = $submissionOk = false;    // ~ N/A, invalid
+
+          ////////////////////////////////////////////////////////////
+          // validate submission
+          // $submissionErr = [];    // Store errors here
+
+          $avatarExtensionsAllowed = ['jpeg','jpg','png','bmp',''];
+
+          // name of the name of the actual file to be uploaded
           $avatarName = $_FILES['stdavatar']['name'];
           // the physical avatar file on a temporary uploads directory on the server
           $avatarTemp = $_FILES['stdavatar']['tmp_name'];
           // get avatar file base name
           $avatarBaseName = substr($avatarName, 0, strripos($avatarName, '.'));
+          // file type of avatar
+          $avatarFileType = $_FILES['stdavatar']['type'];
           // extension of the uploaded file
-          $avatarExtension = pathinfo($avatarName, PATHINFO_EXTENSION);
+          $avatarExtension = strtolower(pathinfo($avatarName, PATHINFO_EXTENSION));
           // size of the uploaded avatar file
           $avatarSize = $_FILES['stdavatar']['size'];
           // allowed avatar file types
-          $allowed_avatar_file_types = ['jpg','png','bmp','raw'];
+          // $allowed_avatar_file_types = ['jpg','png','bmp','raw'];
           // new avatar file name, patterned: Last_First.jpg/png/bmp
           $newAvatarFileName = $stdLName . '_' . $stdFName . '.' . $avatarExtension;
+          $avatarPath = $studentFolder . "/" . $newAvatarFileName;
 
-          ////////////////////////////////////////////////////////////
-          // uploads a submission
-    	    // name of the uploaded submission file
-    	    $submissionName = $_FILES['stdsubmission']['name'];
-    	    // the physical submission file on a temporary uploads directory on the server
-          $submissionTemp = $_FILES['stdsubmission']['tmp_name'];
-          // extension of the uploaded submission file
-          $submissionExtension = pathinfo($submissionName, PATHINFO_EXTENSION);
-    	    // disallowed submission file types
-      	  $disallowed_submission_file_types = ['exe','msi','bat'];
+          // validate avatar's extension
+          if (!in_array($avatarExtension, $avatarExtensionsAllowed)) {
+            echo '<script>alert("Wrong avatar file type.")</script>';
+            $errors = "Wrong avatar file type.";
+            $avatarOk = false;
+          }
 
-          // path to the directory of each student. Folder name pattern: LastName_FirstName
-          $studentFolder = $stdLName . '_' . $stdFName;
+          // check if no avatar is uploaded
+          if ($avatarExtension == '') {
+            $newAvatarFileName = '';
+            $avatarOk = true;
+          }
 
-          // rename file into Last_First.jpg/png/bmp pattern
-          $avatarPath     = $studentFolder . "/" . $newAvatarFileName;
-          $submissionPath = $studentFolder . "/" . $submissionName;
+          // else {
+          //   $avatarOk = true;
+          // }
 
-          // check for the validation of the file types
-          if (!in_array($avatarExtension, $allowed_avatar_file_types) || ($avatarSize > 5000000) || in_array($submissionExtension, $disallowed_submission_file_types)) {
-            // echo '<script>alert("Wrong avatar/submission(s) file type/size.")</script>';
-            if (!in_array($avatarExtension, $allowed_avatar_file_types) ) {
-              echo '<script>alert("Wrong avatar file type.")</script>';
-            }
-            if ($avatarSize > 5000000) {
-              echo '<script>alert("Avatar should 5MB or less.")</script>';
-            }
-            if (in_array($submissionExtension, $disallowed_submission_file_types)) {
-              echo '<script>alert("Wrong submission(s) file type.")</script>';
-            }
+          // validate avatar's size
+          if ($_FILES['stdavatar']['size'] > 5242880) {
+            echo '<script>alert("Avatar should 5MB or less.")</script>';
+            $errors = "File exceeds maximum size (5MB)";
+            $avatarOk = false;
           }
           else {
+            $avatarOk = true;
+          }
+
+          $submissionExtensionsBanned = ['exe','msi','bat', 'com'];
+
+          // name of the name of the submission file to be uploaded
+          $submissionName = $_FILES['stdsubmission']['name'];
+          // the physical submission file on a temporary uploads folder on the server
+          $submissionTemp = $_FILES['stdsubmission']['tmp_name'];
+          // file type of avatar
+          $submissionFileType = $_FILES['stdsubmission']['type'];
+          // extension of the uploaded submission file
+          $submissionExtension = strtolower(pathinfo($submissionName, PATHINFO_EXTENSION));
+          // disallowed submission file types
+          // $disallowed_submission_file_types = ['exe','msi','bat'];
+          // rename file into Last_First.jpg/png/bmp pattern
+          $submissionPath = $studentFolder . "/" . $submissionName;
+
+          ////////////////////////////////////////////////////////////
+          // uploads submission
+          // $submissionOk = true;
+          // if no file was chosen for avatar
+          // if (!empty($_FILES['stdsubmission']['name'])) {
+          //   // if there is no submission
+          // }
+          // else {         // if there is submission
+
+          if (in_array($submissionExtension, $submissionExtensionsBanned)) {
+            echo '<script>alert("Wrong submission(s) file type.")</script>';
+            $errors = "Wrong submission(s) file type.";
+            $submissionOk = false;
+          }
+          else {
+            $submissionOk = true;
+            $errors = "";
+          }
+
+          if (!empty($errors)) {
+            echo '<script>alert("Errors may occur. Save data failed.")</script>';
+          }
+          if (empty($errors)) {
             $queryInsert = "INSERT INTO studentinfo(sid, firstname, lastname, ssn, dob, gender, race, photo, submission)
                             VALUES ('', '$stdFName', '$stdLName', '$stdSSN', '$stdDOB', '$stdGender', '$stdRace', '$newAvatarFileName', '$submissionName')";
-
-            // make a folder for the student to store avatar and submissions
-            // create directory if not exists
-            if (!is_dir($studentFolder)){
-              mkdir($studentFolder, 0777, true);    // 0777: full permission
-            }
+            echo '<script>alert("Save data succeed.")</script>';
 
             if (mysqli_query($dbconnection, $queryInsert)) {
               header("location:view.php");
             }
             else {
               echo '<script>alert("Save data failed.")</script>';
+            }
+
+            // make a folder for the student to store avatar and submissions
+            // create directory if not exists
+            if (!is_dir($studentFolder)){
+              mkdir($studentFolder, 0777, true);    // 0777: full permission
             }
 
             // move the avatar to avatarPath
@@ -154,9 +210,9 @@
             else {
               echo '<script>alert("Upload submissions failed.")</script>';
             }
-          }
-        }
-      }  // end of if (isset($_POST['savedata']))
+          } // end: if ($avatarOk===true && $submissionOk===true)
+        }   // end: if all required fields are filled
+      }  // end: if (isset($_POST['savedata']))
 
       // if "VIEW RECORDS" button was pressed
       if (isset($_POST['display'])) {
@@ -186,12 +242,12 @@
           <tr>
             <td>First Name</td>
             <td><input type="text" name="fname" value="<?php echo $stdFName ?>">
-              <span class="error">* <?php echo $fNameErr;?></span></td>
+                <span class="error">* <?php echo $fNameErr;?></span></td>
             </tr>
             <tr>
               <td>Last Name</td>
               <td><input type="text" name="lname" value="<?php echo $stdLName ?>">
-                <span class="error">* <?php echo $lNameErr;?></span></td>
+                  <span class="error">* <?php echo $lNameErr;?></span></td>
               </tr>
               <tr>
                 <td>SSN (Optional)</td>
@@ -206,7 +262,7 @@
                 <td><input type="radio" name="stdgender" <?php if (isset($stdGender) && $stdGender=="Female") echo "checked";?> value="Female">Female
                     <input type="radio" name="stdgender" <?php if (isset($stdGender) && $stdGender=="Male") echo "checked";?> value="Male">Male
                     <input type="radio" name="stdgender" <?php if (isset($stdGender) && $stdGender=="Other") echo "checked";?> value="Other">Other
-                  <span class="error">* <?php echo $genderErr;?></span>
+                    <span class="error">* <?php echo $genderErr;?></span>
                 </tr>
                 <tr>
                   <td>Race</td>
