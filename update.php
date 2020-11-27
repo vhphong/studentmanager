@@ -30,12 +30,9 @@
                         // , photo = '".$stdAvatar."'
                         // , submission = '".$stdSubmissions."'
 
-    // test queryUpdate
-    // $queryUpdate = "SELECT * FROM studentinfo";
+    $didUpdate = mysqli_query($dbconnection, $queryUpdate);
 
-    $resultUpdate = mysqli_query($dbconnection, $queryUpdate);
-
-    if ($resultUpdate)
+    if ($didUpdate)
     {
       // echo "Updated successfully";
       header("location:view.php");
