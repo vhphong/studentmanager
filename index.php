@@ -61,7 +61,7 @@
             $stdRace = $_POST['stdrace'];
           }
 
-        }   // end: if a required field is empty
+        }   // end: if any required field is empty
         else {    // if all required fields are filled
           // if (isset($_POST['stdid'])) {
           //   $stdID = $_POST['stdid'];
@@ -71,6 +71,12 @@
           //   $stdSSN = $_POST['ss'];
           // }
 
+          $stdFName = $_POST['fname'];
+          $stdLName = $_POST['lname'];
+          $stdSSN = $_POST['ss'];
+          $stdDOB = $_POST['birthday'];
+          $stdGender = $_POST['stdgender'];
+          $stdRace = $_POST['stdrace'];
           if (isset($_POST['stdavatar'])) {
             $stdAvatar = $_POST['stdavatar'];
           } else {
@@ -80,12 +86,6 @@
           if (isset($_POST['stdsubmission'])) {
             $stdSubmissions = $_POST['stdsubmission'];
           }
-          $stdFName = $_POST['fname'];
-          $stdLName = $_POST['lname'];
-          $stdSSN = $_POST['ss'];
-          $stdDOB = $_POST['birthday'];
-          $stdGender = $_POST['stdgender'];
-          $stdRace = $_POST['stdrace'];
           // $stdAvatar = $_POST['stdavatar'];
           // $stdSubmissions = $_POST['stdsubmission'];
           // path to the folder of each student, patterned: LastName_FirstName
